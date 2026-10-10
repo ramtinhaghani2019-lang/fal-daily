@@ -1,0 +1,25 @@
+name: Daily Fal
+
+on:
+  schedule:
+    # ساعت 21:30 UTC = دقیقاً ساعت 01:00 بامداد به وقت ایران
+    - cron: '30 21 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: دریافت کدها
+        uses: actions/checkout@v4
+
+      - name: تنظیم پایتون
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: نصب کتابخانه‌ها
+        run: pip install requests beautifulsoup4
+
+      - name: اجرای برنامه
+        run: python scraper.py
